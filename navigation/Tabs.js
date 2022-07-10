@@ -13,7 +13,7 @@ const Tabs = () => {
   const isDark = useColorScheme() === "dark";
   return (
     <Tab.Navigator
-      initialRouteName="Search"
+      initialRouteName="Movies"
       screenOptions={{
         tabBarStyle: {
           backgroundColor: isDark ? BLACK_COLOR : "white",
