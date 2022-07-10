@@ -8,9 +8,9 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => (
   <Tab.Navigator>
-    <Tab.Screen name="Movies" component={Movies}></Tab.Screen>
-    <Tab.Screen name="Tv" component={Tv}></Tab.Screen>
-    <Tab.Screen name="Search" component={Search}></Tab.Screen>
+    <Tab.Screen name="Movies" component={Movies} />
+    <Tab.Screen name="Tv" component={Tv} />
+    <Tab.Screen name="Search" component={Search} />
   </Tab.Navigator>
 );
 
