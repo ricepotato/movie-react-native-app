@@ -23,16 +23,36 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = ({
   const isDark = useColorScheme() === "dark";
   const [loading, setLoading] = useState(true);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [tranding, setTranding] = useState([]);
+
   const getNowPlaying = async () => {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
     );
     const { results } = await response.json();
     setNowPlayingMovies(results);
+  };
+  const getUpcoming = async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+    );
+    const { results } = await response.json();
+    setUpcoming(results);
+  };
+  const getTranding = async () => {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/tranding/movie/week?api_key=${API_KEY}`
+    );
+    const { results } = await response.json();
+    setTranding(results);
+  };
+  const getData = async () => {
+    await Promise.all([getTranding(), getUpcoming(), getNowPlaying()]);
     setLoading(false);
   };
   useEffect(() => {
-    getNowPlaying();
+    getData();
   }, []);
   return loading ? (
     <Loader>
