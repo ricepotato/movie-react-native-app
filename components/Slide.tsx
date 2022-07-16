@@ -5,6 +5,7 @@ import { BlurView } from "expo-blur";
 import Swiper from "react-native-swiper";
 import { makeImgPath } from "../utils";
 import { StyledInterface } from "styled-components";
+import Poster from "./Poster";
 
 const View = styled.View`
   flex: 1;
@@ -20,12 +21,6 @@ const BgImg = styled.Image`
   width: 100%;
   height: 100%;
   position: absolute;
-`;
-
-const Poster = styled.Image`
-  width: 100px;
-  height: 160px;
-  border-radius: 5px;
 `;
 
 const Title = styled.Text<{ isDark: boolean }>`
@@ -86,7 +81,7 @@ const Slide: React.FC<SlideProps> = ({
         style={StyleSheet.absoluteFill}
       >
         <Wrapper>
-          <Poster source={{ uri: makeImgPath(posterPath) }}></Poster>
+          <Poster path={posterPath}></Poster>
           <Column>
             <Title isDark={isDark}>{originalTitle}</Title>
             <Overview isDark={isDark}>{overview.slice(0, 80)}...</Overview>
