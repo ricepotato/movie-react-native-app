@@ -1,19 +1,16 @@
-import AppLoading from "expo-app-loading";
-import React, { useState } from "react";
-import * as Font from "expo-font";
-import { Text, Image, useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import AppLoading from "expo-app-loading";
 import { Asset } from "expo-asset";
-import {
-  NavigationContainer,
-  DarkTheme,
-  DefaultTheme,
-} from "@react-navigation/native";
+import * as Font from "expo-font";
+import React, { useState } from "react";
+import { Image, useColorScheme } from "react-native";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ThemeProvider } from "styled-components";
-import Tabs from "./navigation/Tabs";
-import Stack from "./navigation/Stack";
 import Root from "./navigation/Root";
 import { darkTheme, lightTheme } from "./styled";
+
+const queryClient = new QueryClient();
 
 const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 
@@ -45,10 +42,12 @@ export default function App() {
     );
   }
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
