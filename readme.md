@@ -1,6 +1,12 @@
 # movie react native app
 
 
+## project 생성
+
+```bash
+npx create-react-native-app
+```
+
 
 ```bash
 npm install -D typescript @types/jest @types/react @types/react-native @types/react-test-renderer
