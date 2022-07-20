@@ -1,5 +1,9 @@
 # movie react native app
 
+## 원본 소스
+
+https://github.com/nomadcoders/noovies
+
 
 ## project 생성
 
