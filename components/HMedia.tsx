@@ -34,7 +34,7 @@ const Title = styled.Text`
 `;
 
 interface HMediaProps {
-  posterPath: string;
+  posterPath: string | null;
   originalTitle: string;
   overview: string;
   releaseDate?: string;

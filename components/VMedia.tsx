@@ -15,7 +15,7 @@ const Title = styled.Text`
 `;
 
 interface VMediaProps {
-  posterPath: string;
+  posterPath: string | null;
   originalTitle: string;
   voteAverage: number;
 }
