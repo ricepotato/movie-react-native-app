@@ -1,6 +1,12 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import { Dimensions, StyleSheet, Share, Platform } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Share,
+  Platform,
+  useColorScheme,
+} from "react-native";
 import styled from "styled-components/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Movie, MovieDetails, moviesApi, TV, tvApi, TVDetails } from "../api";
@@ -33,7 +39,7 @@ const Column = styled.View`
 `;
 const Title = styled.Text`
   color: white;
-  font-size: 36px;
+  font-size: 32px;
   align-self: flex-end;
   margin-left: 15px;
   font-weight: 500;
@@ -52,7 +58,7 @@ const VideoBtn = styled.TouchableOpacity`
   flex-direction: row;
 `;
 const BtnText = styled.Text`
-  color: white;
+  color: ${(props) => props.theme.textColor};
   font-weight: 600;
   margin-bottom: 10px;
   line-height: 24px;
@@ -122,6 +128,7 @@ const Detail: React.FC<DetailScreenProps> = ({
     // await Linking.openURL(baseUrl);
     await WebBrowser.openBrowserAsync(baseUrl);
   };
+  const isDark = useColorScheme() === "dark";
   return (
     <Container>
       <Header>
@@ -130,7 +137,7 @@ const Detail: React.FC<DetailScreenProps> = ({
           source={{ uri: makeImgPath(params.backdrop_path || "") }}
         />
         <LinearGradient
-          colors={["transparent", BLACK_COLOR]}
+          colors={["transparent", isDark ? BLACK_COLOR : "white"]}
           style={StyleSheet.absoluteFill}
         />
         <Column>
@@ -147,7 +154,11 @@ const Detail: React.FC<DetailScreenProps> = ({
         {isLoading ? <Loader /> : null}
         {data?.videos?.results?.map((video) => (
           <VideoBtn key={video.key} onPress={() => openYTLink(video.key)}>
-            <Ionicons name="logo-youtube" color="white" size={24} />
+            <Ionicons
+              name="logo-youtube"
+              color={isDark ? "white" : BLACK_COLOR}
+              size={24}
+            />
             <BtnText>{video.name}</BtnText>
           </VideoBtn>
         ))}
