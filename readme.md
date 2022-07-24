@@ -24,5 +24,5 @@ ios 사용시 pod install 해야 한다.
 
 ```bash
 expo install expo-blur
-expo pod-install ios
+npx pod-install
 ```
