@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { RefreshControl, ScrollView } from "react-native";
 import { useQuery, useQueryClient } from "react-query";
@@ -8,6 +8,7 @@ import Loader from "../components/Loading";
 
 const Tv = () => {
   const queryClient = useQueryClient();
+  const [refreshing, setRefreshing] = useState(false);
   const {
     isLoading: todayLoading,
     data: todayData,
@@ -28,9 +29,10 @@ const Tv = () => {
   if (loading) {
     return <Loader></Loader>;
   }
-  const refreshing = todayRefetching || topRefetching || trendingRefetching;
-  const onRefresh = () => {
-    queryClient.refetchQueries(["tv"]);
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await queryClient.refetchQueries(["tv"]);
+    setRefreshing(false);
   };
   return (
     <ScrollView

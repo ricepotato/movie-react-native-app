@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-
-import { View, Text } from "react-native";
+import { useQuery } from "react-query";
 import styled from "styled-components/native";
+import { moviesApi, tvApi } from "../api";
+import HList from "../components/HList";
+import Loader from "../components/Loading";
 
 const Container = styled.ScrollView``;
 
@@ -11,12 +13,34 @@ const SearchBar = styled.TextInput`
   border-radius: 15px;
   width: 90%;
   margin: 10px auto;
+  margin-bottom: 40px;
 `;
 
 const Search = () => {
   const [query, setQuery] = useState("");
+  const {
+    isLoading: isMovieLoading,
+    data: movieData,
+    refetch: searchMovie,
+  } = useQuery(["searchMovies", query], moviesApi.search, {
+    enabled: false,
+  });
+  const {
+    isLoading: isTvLoading,
+    data: tvData,
+    refetch: searchTv,
+  } = useQuery(["searchTv", query], tvApi.search, {
+    enabled: false,
+  });
   const onChangeText = (text: string) => {
     setQuery(text);
+  };
+  const onSubmit = () => {
+    if (query === "") {
+      return;
+    }
+    searchMovie();
+    searchTv();
   };
   return (
     <Container>
@@ -25,7 +49,13 @@ const Search = () => {
         placeholderTextColor="grey"
         returnKeyType="search"
         onChangeText={onChangeText}
+        onSubmitEditing={onSubmit}
       ></SearchBar>
+      {isMovieLoading || isTvLoading ? <Loader /> : null}
+      {movieData ? (
+        <HList title="Movie Results" data={movieData.results} />
+      ) : null}
+      {tvData ? <HList title="Tv Results" data={tvData.results} /> : null}
     </Container>
   );
 };
